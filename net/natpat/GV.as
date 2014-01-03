@@ -3,7 +3,6 @@ package net.natpat
 	import flash.display.Stage;
 	import flash.geom.Point;
 	import flash.display.BitmapData;
-	import com.google.analytics.AnalyticsTracker;
 	
 	/**
 	 * ...
@@ -36,8 +35,6 @@ package net.natpat
 		 * The camera point. Use it as you will
 		 */
 		public static var camera:Point = new Point();
-		
-		public static var tracker:AnalyticsTracker;
 		
 		/**
 		 * The number of seconds elapsed adjusted by timeFactor
