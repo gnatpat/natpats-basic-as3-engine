@@ -88,6 +88,13 @@ package net.natpat
 		/** @private */ public static const DEG:Number = -180 / Math.PI;
 		/** @private */ public static const RAD:Number = Math.PI / -180;
 		
+		public static function pointInRect(x:int, y:int, xRect:int, yRect:int, width:int, height:int)
+		{
+			return (x > xRect &&
+					x < xRect + width &&
+					y > yRect &&
+					y < yRect + height)
+		}
 	}
 
 }
