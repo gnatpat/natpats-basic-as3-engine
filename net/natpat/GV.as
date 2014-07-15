@@ -1,6 +1,8 @@
 package net.natpat 
 {
+	import com.google.analytics.core.EventInfo;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.display.BitmapData;
 	
@@ -88,12 +90,41 @@ package net.natpat
 		/** @private */ public static const DEG:Number = -180 / Math.PI;
 		/** @private */ public static const RAD:Number = Math.PI / -180;
 		
-		public static function pointInRect(x:int, y:int, xRect:int, yRect:int, width:int, height:int)
+		public static function pointInRect(x:int, y:int, xRect:int, yRect:int, width:int, height:int):Boolean
 		{
 			return (x > xRect &&
 					x < xRect + width &&
 					y > yRect &&
 					y < yRect + height)
+		}
+		
+		private static var duration:Number;
+		private static var intensity:Number;
+		private static var offset:Point;
+		
+		public static function shake(duration:Number, intensity:Number):void
+		{
+			GV.duration = duration;
+			GV.intensity = intensity;
+			offset = new Point(0, 0);
+			stage.addEventListener(Event.ENTER_FRAME, shakeUpdate);
+		}
+		
+		private static function shakeUpdate(e:Event):void
+		{
+			camera.x -= offset.x;
+			camera.y -= offset.y;
+			
+			duration -= elapsed;
+			if (duration < 0)
+			{
+				stage.removeEventListener(Event.ENTER_FRAME, shakeUpdate);
+				return;
+			}
+			offset.x = Math.random() * intensity - (intensity / 2);
+			offset.y = Math.random() * intensity - (intensity / 2);
+			camera.x += offset.x;
+			camera.y += offset.y;
 		}
 	}
 
