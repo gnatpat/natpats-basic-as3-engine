@@ -5,6 +5,12 @@
 	 */
 	public class Ease 
 	{
+		
+		public static function none(t:Number):Number
+		{
+			return t;
+		}
+		
 		/** Quadratic in. */
 		public static function quadIn(t:Number):Number
 		{

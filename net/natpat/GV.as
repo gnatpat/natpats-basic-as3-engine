@@ -88,12 +88,22 @@ package net.natpat
 		/** @private */ public static const DEG:Number = -180 / Math.PI;
 		/** @private */ public static const RAD:Number = Math.PI / -180;
 		
-		public static function pointInRect(x:int, y:int, xRect:int, yRect:int, width:int, height:int)
+		public static function pointInRect(x:int, y:int, xRect:int, yRect:int, width:int, height:int):Boolean
 		{
 			return (x > xRect &&
 					x < xRect + width &&
 					y > yRect &&
-					y < yRect + height)
+					y < yRect + height);
+		}
+		
+		public static function intersects(x1:int, y1:int, width1:int, height1:int,
+										  x2:int, y2:int, width2:int, height2:int):Boolean
+		{
+			if (x1 > x2 + width2) return false;
+			if (x2 > x1 + width1) return false;
+			if (y1 > y2 + height2) return false;
+			if (y2 > y1 + height1) return false;
+			return true;
 		}
 	}
 
