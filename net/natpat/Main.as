@@ -35,6 +35,9 @@ package net.natpat
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			// entry point
 			
+			//Set GV.stage to the stage, for easier access
+			GV.stage = stage;
+			
 			game = new GameManager(stage.stageWidth, stage.stageHeight);
 			
 			//Add the game bitmap to the screen
@@ -42,15 +45,7 @@ package net.natpat
 			
 			//Create the main game loop
 			addEventListener(Event.ENTER_FRAME, run);
-			
-			//Adds keyboard listeners
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, Input.keyPressedEvent);
-			stage.addEventListener(KeyboardEvent.KEY_UP,   Input.keyReleasedEvent);
-			stage.addEventListener(MouseEvent.MOUSE_DOWN,  Input.mousePressedEvent);
-			stage.addEventListener(MouseEvent.MOUSE_UP,  Input.mouseReleasedEvent);
-			
-			//Set GV.stage to the stage, for easier access
-			GV.stage = stage;
+			Input.setupListeners();
 		}
 		
 		private function run(e:Event):void

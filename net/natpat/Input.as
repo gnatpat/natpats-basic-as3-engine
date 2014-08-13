@@ -21,7 +21,16 @@ package net.natpat
 			
 		}
 		
-		public static function keyPressedEvent(e:KeyboardEvent):void
+		public static function setupListeners():void
+		{
+			//Adds keyboard listeners
+			GV.stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedEvent);
+			GV.stage.addEventListener(KeyboardEvent.KEY_UP,   keyReleasedEvent);
+			GV.stage.addEventListener(MouseEvent.MOUSE_DOWN,  mousePressedEvent);
+			GV.stage.addEventListener(MouseEvent.MOUSE_UP,    mouseReleasedEvent);
+		}
+		
+		private static function keyPressedEvent(e:KeyboardEvent):void
 		{
 			var keyCode:int = e.keyCode;
 			
@@ -32,7 +41,7 @@ package net.natpat
 			noOfKeysPressed++;
 		}
 		
-		public static function keyReleasedEvent(e:KeyboardEvent):void
+		private static function keyReleasedEvent(e:KeyboardEvent):void
 		{
 			var keyCode:int = e.keyCode;
 			
@@ -75,13 +84,13 @@ package net.natpat
 			return false;
 		}
 		
-		public static function mousePressedEvent(e:MouseEvent):void
+		private static function mousePressedEvent(e:MouseEvent):void
 		{
 			mousePressed = true;
 			mouseDown = true;
 		}
 		
-		public static function mouseReleasedEvent(e:MouseEvent):void
+		private static function mouseReleasedEvent(e:MouseEvent):void
 		{
 			mouseReleased = true;
 			mouseDown = false;
