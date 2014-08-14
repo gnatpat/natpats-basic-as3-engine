@@ -28,7 +28,7 @@ package net.natpat
 		public static var renderer:BitmapData;
 		
 		public var text:Text = new Text(10, 10, "Hello, World", 2, true);
-		public var emitter:Emitter = new Emitter(new BitmapData(5, 5, true, 0xffffffff));
+		public var emitter:Emitter = new Emitter(new BitmapData(4, 4, true, 0xffffffff));
 		
 		public function GameManager(stageWidth:int, stageHeight:int) 
 		{
@@ -45,9 +45,10 @@ package net.natpat
 			GuiManager.add(text);
 			
 			emitter.setColor(0xff0000, 0x00cccc);
-			emitter.setMotion(0, 25, 0.5, 360, 75, 0.5);
-			emitter.setAlpha(1, 0.25);
-			
+			emitter.setMotion(0, 125, 5, 360, 25, 0.5, Ease.quintOut);
+			emitter.setAlpha(1, 0, Ease.cubeIn);
+			emitter.setEmitTime(0.02, 0);
+			emitter.startEmitting();
 		}
 		
 		public function render():void
@@ -72,9 +73,6 @@ package net.natpat
 			emitter.x = Input.mouseX;
 			emitter.y = Input.mouseY;
 			
-			emitter.emit();
-			emitter.emit();
-			emitter.emit();
 			emitter.update();
 			
 			Input.update();

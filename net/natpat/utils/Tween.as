@@ -27,6 +27,13 @@ package net.natpat.utils
 			return t.ease((t.time / t.length)) * t.mult + t.offset;
 		}
 		
+		public static function setRepeatable(name:String, repeatable:Boolean):void
+		{
+			var t:TweenObject = getTweenObject(name);
+			if (t == null) return;
+			t.repeatabe = repeatable;
+		}
+		
 		private static function getTweenObject(name:String):TweenObject
 		{
 			var t:TweenObject = tween;
@@ -34,6 +41,7 @@ package net.natpat.utils
 			{
 				t = t.next;
 			}
+			if(t == null) trace("Tried to get the tween " + name + " which doesn't exist!");
 			return t;
 		}
 		
@@ -66,6 +74,15 @@ package net.natpat.utils
 			while (t != null)
 			{
 				t.time += elapsed;
+				if (t.repeatable)
+				{
+					while (t.time > t.length)
+					{
+						t.time -= t.length;
+						t.callback();
+					}
+				}
+				
 				if (t.time >= t.length)
 				{
 					t.time = t.length;
@@ -90,6 +107,7 @@ package net.natpat.utils
 		public var next:TweenObject;
 		public var prev:TweenObject;
 		public var done:Boolean;
+		public var repeatable:Boolean = false;
 		
 		public function TweenObject(name:String, length:Number, mult:Number = 1, offset:Number = 0, callback:Function = null, ease:Function = null)
 		{

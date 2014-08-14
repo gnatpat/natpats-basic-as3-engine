@@ -47,8 +47,39 @@
 			frame = new Rectangle(0, 0, frameWidth, frameHeight);
 		}
 		
+		public function setEmitTime(time:Number, timeRange:Number):Emitter
+		{
+			this.time = time;
+			this.timeRange = timeRange;
+			return this;
+		}
+		
+		public function startEmitting():void
+		{
+			timer = 0;
+			timeToGetTo = 0;
+			emitOnTimer = true;
+		}
+		
+		public function stopEmitting():void
+		{
+			emitOnTimer = false;
+		}
+		
 		public function update():void 
 		{
+			if (emitOnTimer)
+			{
+				timer += GV.elapsed;
+				while (timer > timeToGetTo)
+				{
+					emit();
+					timer -= timeToGetTo;
+					timeToGetTo = time + timeRange * Math.random();
+				}
+			}
+			
+			
 			// quit if there are no particles
 			if (!particle) return;
 			
@@ -316,6 +347,13 @@
 		/** @private */ internal var blue:Number = 1;
 		/** @private */ internal var blueRange:Number = 0;
 		/** @private */ internal var colorEase:Function;
+		
+		//Time information.
+		/** @private */ internal var time:Number = 0;
+		/** @private */ internal var timeRange:Number = 0;
+		/** @private */ internal var timer:Number;
+		/** @private */ internal var timeToGetTo:Number;
+		/** @private */ internal var emitOnTimer:Boolean = false;
 		
 		// Buffer information.
 		/** @private */ internal var buffer:BitmapData;
