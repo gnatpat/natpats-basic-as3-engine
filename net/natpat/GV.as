@@ -1,6 +1,8 @@
 package net.natpat 
 {
+	import com.google.analytics.core.EventInfo;
 	import flash.display.Stage;
+	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.display.BitmapData;
 	
@@ -104,6 +106,35 @@ package net.natpat
 			if (y1 > y2 + height2) return false;
 			if (y2 > y1 + height1) return false;
 			return true;
+		}
+		
+		private static var duration:Number;
+		private static var intensity:Number;
+		private static var offset:Point;
+		
+		public static function shake(duration:Number, intensity:Number):void
+		{
+			GV.duration = duration;
+			GV.intensity = intensity;
+			offset = new Point(0, 0);
+			stage.addEventListener(Event.ENTER_FRAME, shakeUpdate);
+		}
+		
+		private static function shakeUpdate(e:Event):void
+		{
+			camera.x -= offset.x;
+			camera.y -= offset.y;
+			
+			duration -= elapsed;
+			if (duration < 0)
+			{
+				stage.removeEventListener(Event.ENTER_FRAME, shakeUpdate);
+				return;
+			}
+			offset.x = Math.random() * intensity - (intensity / 2);
+			offset.y = Math.random() * intensity - (intensity / 2);
+			camera.x += offset.x;
+			camera.y += offset.y;
 		}
 	}
 
