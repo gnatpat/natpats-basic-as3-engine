@@ -1,6 +1,5 @@
 package net.natpat 
 {
-	import com.google.analytics.core.EventInfo;
 	import flash.display.Stage;
 	import flash.events.Event;
 	import flash.geom.Point;
