@@ -31,7 +31,7 @@ package net.natpat
 		private var bitmap:Bitmap;
 		private var bitmapData:BitmapData;
 		
-		public function SpriteSheet(bitmap:Bitmap, width:int, height:int)
+		public function SpriteSheet(source:Class, width:int, height:int)
 		{
 			this.width = width;
 			this.height = height; 
@@ -49,7 +49,7 @@ package net.natpat
 			
 			buffer = GV.screen;
 			
-			this.bitmap = bitmap;
+			bitmap = Bitmap(new source);
 			bitmapData = bitmap.bitmapData;
 		}
 		
