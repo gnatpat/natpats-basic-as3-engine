@@ -29,6 +29,7 @@ package net.natpat
 		
 		public var text:Text = new Text(10, 10, "Hello, World", 2, true);
 		public var emitter:Emitter = new Emitter(new BitmapData(4, 4, true, 0xffffffff));
+		public var ss:SpriteSheet;
 		
 		public function GameManager(stageWidth:int, stageHeight:int) 
 		{
@@ -48,7 +49,31 @@ package net.natpat
 			emitter.setMotion(0, 125, 5, 360, 25, 0.5, Ease.quintOut);
 			emitter.setAlpha(1, 0, Ease.cubeIn);
 			emitter.setEmitTime(0.02, 0);
+			emitter.setSizeChange(1, 0, Ease.quintIn);
 			emitter.startEmitting();
+			
+			var bd:BitmapData = new BitmapData(60, 60, true, 0);
+			bd.fillRect(new Rectangle(0,  0,  30, 30), 0xff000000);
+			bd.fillRect(new Rectangle(30, 0,  30, 30), 0xff00ff00);
+			bd.fillRect(new Rectangle(0,  30, 30, 30), 0xff0000ff);
+			bd.fillRect(new Rectangle(30, 30, 30, 30), 0xffff0000);
+			var bmp:Bitmap = new Bitmap(bd);
+			ss = new SpriteSheet(bmp, 30, 30);
+			ss.addAnim("black", [[0, 0, 1], [1, 1, 0.5]], true);
+			ss.addAnim("greenblue", [[0, 1, 1, hello], [1, 0, 1, blue]], false);
+			ss.addAnim("red", [[1, 1, 1]], false);
+			ss.setDefault("black");
+			ss.changeAnim("black");
+		}
+		
+		public function blue():String
+		{
+			return "red";
+		}
+		
+		public function hello():void
+		{
+			trace("hello");
 		}
 		
 		public function render():void
@@ -57,6 +82,8 @@ package net.natpat
 			
 			//Render the background
 			renderer.fillRect(new Rectangle(0, 0, renderer.width, renderer.height), 0xffffff);		
+			
+			ss.render(200, 200);
 			
 			emitter.render();
 			
@@ -74,6 +101,13 @@ package net.natpat
 			emitter.y = Input.mouseY;
 			
 			emitter.update();
+			
+			if (Input.keyPressed(Key.SPACE))
+			{
+				ss.changeAnim("greenblue");
+			}
+			
+			ss.update();
 			
 			Input.update();
 		}
