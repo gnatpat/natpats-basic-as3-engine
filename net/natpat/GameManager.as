@@ -27,7 +27,7 @@ package net.natpat
 		public var bitmap:Bitmap;
 		public static var renderer:BitmapData;
 		
-		public var text:Text = new Text(10, 10, "Hello, World", 2, true);
+		public var text:Text = new Text(10, 10, "Hello, World!\nPress space!", 2, true);
 		public var emitter:Emitter = new Emitter(new BitmapData(4, 4, true, 0xffffffff));
 		public var ss:SpriteSheet;
 		
@@ -57,6 +57,7 @@ package net.natpat
 			bd.fillRect(new Rectangle(30, 0,  30, 30), 0xff00ff00);
 			bd.fillRect(new Rectangle(0,  30, 30, 30), 0xff0000ff);
 			bd.fillRect(new Rectangle(30, 30, 30, 30), 0xffff0000);
+			
 			var bmp:Bitmap = new Bitmap(bd);
 			ss = new SpriteSheet(bmp, 30, 30);
 			ss.addAnim("black", [[0, 0, 1], [1, 1, 0.5]], true);
