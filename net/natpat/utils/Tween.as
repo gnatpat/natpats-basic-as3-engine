@@ -94,30 +94,31 @@ package net.natpat.utils
 		}
 
 	}
+
+}
+
+internal class TweenObject
+{
+	public var name:String;
+	public var time:Number = 0;
+	public var length:Number;
+	public var callback:Function;
+	public var mult:Number;
+	public var offset:Number;
+	public var ease:Function;
+	public var next:TweenObject;
+	public var prev:TweenObject;
+	public var done:Boolean;
+	public var repeatable:Boolean = false;
 	
-	class TweenObject
+	public function TweenObject(name:String, length:Number, mult:Number = 1, offset:Number = 0, callback:Function = null, ease:Function = null)
 	{
-		public var name:String;
-		public var time:Number = 0;
-		public var length:Number;
-		public var callback:Function;
-		public var mult:Number;
-		public var offset:Number;
-		public var ease:Function;
-		public var next:TweenObject;
-		public var prev:TweenObject;
-		public var done:Boolean;
-		public var repeatable:Boolean = false;
-		
-		public function TweenObject(name:String, length:Number, mult:Number = 1, offset:Number = 0, callback:Function = null, ease:Function = null)
-		{
-			this.name = name;
-			this.length = length;
-			this.callback = callback;
-			this.ease = ease;
-			this.mult = mult;
-			this.offset = offset;
-			done = false;
-		}
+		this.name = name;
+		this.length = length;
+		this.callback = callback;
+		this.ease = ease;
+		this.mult = mult;
+		this.offset = offset;
+		done = false;
 	}
 }
