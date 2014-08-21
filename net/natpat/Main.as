@@ -8,6 +8,10 @@ package net.natpat
 	
 	import flash.utils.getTimer;
 	
+	import flash.display.StageAlign;
+	import flash.display.StageQuality;
+	import flash.display.StageScaleMode;
+	import flash.display.StageDisplayState;
 	
 	/**
 	 * ...
@@ -46,6 +50,10 @@ package net.natpat
 			//Create the main game loop
 			addEventListener(Event.ENTER_FRAME, run);
 			Input.setupListeners();
+			stage.align = StageAlign.TOP_LEFT;
+			stage.quality = StageQuality.HIGH;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.displayState = StageDisplayState.NORMAL;
 		}
 		
 		private function run(e:Event):void
