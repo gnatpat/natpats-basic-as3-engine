@@ -3,6 +3,7 @@
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.geom.ColorTransform;
+	import flash.geom.Matrix;
 	import flash.geom.Point;
 	import flash.geom.Rectangle;
 
@@ -45,13 +46,6 @@
 			frameHeight = frameHeight ? frameHeight : height;
 			frameCount = uint(width / frameWidth) * uint(height / frameHeight);
 			frame = new Rectangle(0, 0, frameWidth, frameHeight);
-		}
-		
-		public function setEmitTime(time:Number, timeRange:Number):Emitter
-		{
-			this.time = time;
-			this.timeRange = timeRange;
-			return this;
 		}
 		
 		public function startEmitting():void
@@ -163,8 +157,17 @@
 					buffer.copyPixels(source, frame, GC.ZERO);
 					buffer.colorTransform(bufferRect, tint);
 					
-					// draw particle
-					GV.screen.copyPixels(buffer, bufferRect, pp, null, null, true);
+					var sizeT:Number = (sizeEase == null) ? t : sizeEase(t);
+					var scale:Number = size + sizeRange * sizeT;
+					if (scale != 1)
+					{
+						GV.screen.copyPixels(scaleBitmapData(buffer, scale), sizeBufferRect, pp, null, null, true);
+					}
+					else
+					{
+						// draw particle
+						GV.screen.copyPixels(buffer, bufferRect, pp, null, null, true);
+					}
 				}
 				else GV.screen.copyPixels(source, frame, pp, null, null, true);
 				
@@ -253,6 +256,25 @@
 			return this;
 		}
 		
+		public function setSizeChange(start:Number = 1, finish:Number = 0, ease:Function = null):Emitter
+		{
+			start = start < 0 ? 0 : start;
+			finish = finish < 0 ? 0 : finish;
+			size = start;
+			sizeRange = finish - start;
+			sizeEase = ease;
+			createBuffer();
+			return this;
+		}
+		
+		
+		public function setEmitTime(time:Number, timeRange:Number):Emitter
+		{
+			this.time = time;
+			this.timeRange = timeRange;
+			return this;
+		}
+		
 		/**
 		 * Emits a particle.
 		 * @param	name		Particle type to emit.
@@ -294,7 +316,22 @@
 			if (buffer) return;
 			buffer = new BitmapData(frame.width, frame.height, true, 0);
 			bufferRect = buffer.rect;
+			sizeBuffer = new BitmapData(frame.width, frame.height, true, 0);
+			sizeBufferRect = sizeBuffer.rect;
 		}
+		
+		private function scaleBitmapData(bitmapData:BitmapData, scale:Number):BitmapData 
+		{
+            var width:int = bitmapData.width;
+            var height:int = bitmapData.height;
+            sizeBuffer.fillRect(sizeBufferRect, 0);
+            var matrix:Matrix = new Matrix();
+			matrix.translate( -width / 2, -height / 2);
+            matrix.scale(scale, scale);
+			matrix.translate(width / 2, height / 2);
+            sizeBuffer.draw(bitmapData, matrix, null, null, null, true);
+            return sizeBuffer;
+        }
 		
 		/**
 		 * Amount of currently existing particles.
@@ -348,6 +385,11 @@
 		/** @private */ internal var blueRange:Number = 0;
 		/** @private */ internal var colorEase:Function;
 		
+		// Size information.
+		/** @private */ internal var size:Number = 1;
+		/** @private */ internal var sizeRange:Number = 0;
+		/** @private */ internal var sizeEase:Function;
+		
 		//Time information.
 		/** @private */ internal var time:Number = 0;
 		/** @private */ internal var timeRange:Number = 0;
@@ -355,6 +397,9 @@
 		/** @private */ internal var timeToGetTo:Number;
 		/** @private */ internal var emitOnTimer:Boolean = false;
 		
+		// Buffer information.
+		/** @private */ internal var sizeBuffer:BitmapData;
+		/** @private */ internal var sizeBufferRect:Rectangle;
 		// Buffer information.
 		/** @private */ internal var buffer:BitmapData;
 		/** @private */ internal var bufferRect:Rectangle;
