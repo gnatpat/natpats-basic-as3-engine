@@ -3,6 +3,7 @@ package net.natpat
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.filters.GlowFilter;
 	import flash.geom.Rectangle;
 	import net.natpat.gui.Button;
 	import net.natpat.gui.InputBox;
@@ -20,19 +21,17 @@ package net.natpat
 	 */
 	public class GameManager 
 	{
-		
 		/**
 		 * Bitmap and bitmap data to be drawn to the screen.
 		 */
 		public var bitmap:Bitmap;
 		public static var renderer:BitmapData;
 		
-		public var text:Text = new Text(10, 10, "Hello, World!\nPress space!", 2, true);
+		public var text:Text = new Text(10, 10, "Hello, World!", 2, true);
 		public var emitter:Emitter = new Emitter(new BitmapData(4, 4, true, 0xffffffff));
 		
 		public function GameManager(stageWidth:int, stageHeight:int) 
 		{
-			
 			GC.SCREEN_WIDTH = stageWidth;
 			GC.SCREEN_HEIGHT = stageHeight;
 			
@@ -50,7 +49,6 @@ package net.natpat
 			emitter.setEmitTime(0.02, 0);
 			emitter.setSizeChange(1, 0, Ease.quintIn);
 			emitter.startEmitting();
-			
 		}
 		public function render():void
 		{
@@ -61,8 +59,6 @@ package net.natpat
 			
 			emitter.render();
 			
-			rot.render(10, 200);
-			
 			GuiManager.render();
 			
 			renderer.unlock();
@@ -70,7 +66,6 @@ package net.natpat
 		
 		public function update():void
 		{
-			
 			GuiManager.update();
 			
 			emitter.x = Input.mouseX;
