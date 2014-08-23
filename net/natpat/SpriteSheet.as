@@ -30,14 +30,13 @@ package net.natpat
 		
 		protected var buffer:BitmapData;
 		
-		protected var bitmap:Bitmap;
 		protected var bitmapData:BitmapData;
 		
-		public function SpriteSheet(source:Class, width:int, height:int)
+		public function SpriteSheet(source:*, width:int, height:int)
 		{
 			this.width = width;
 			this.height = height; 
-			offset = new Point;
+			offset = new Point(0, 0);
 			
 			anims = new Object();
 			point = new Point();
@@ -51,8 +50,11 @@ package net.natpat
 			
 			buffer = GV.screen;
 			
-			bitmap = Bitmap(new source);
-			bitmapData = bitmap.bitmapData;
+			bitmapData = GV.loadBitmapDataFromSource(source);
+			
+			addAnim("default", [[0, 0, 5]], true);
+			setDefault("default");
+			changeAnim("default");
 		}
 		
 		/**
@@ -85,6 +87,8 @@ package net.natpat
 		{
 			if (anim == null) return;
 			
+			if (anim.frames.length == 0) return;
+			
 			fd = anim.frames[frame];
 			
 			time += GV.elapsed;
@@ -111,6 +115,8 @@ package net.natpat
 		public function render(x:int, y:int):void
 		{
 			if (anim == null) return;
+			
+			if (anim.frames.length == 0) return;
 			
 			if (anim is GlowAnim)
 			{
@@ -139,10 +145,22 @@ package net.natpat
 			point.x = x;
 			point.y = y;
 			
-			rect.x = fd.x * width  + offset.x;
-			rect.y = fd.y * height + offset.y;
+			rect.x = fd.x * width  - width + offset.x;
+			rect.y = fd.y * height - height + offset.y;
 			
 			buffer.copyPixels(bitmapData, rect, point, null, null, true);
+		}
+		
+		public function setWidth(width:int):void
+		{
+			this.width = width;
+			rect.width = width;
+		}
+		
+		public function setHeight(height:int):void
+		{
+			this.height = height;
+			rect.height = height;
 		}
 		
 		public function changeAnim(name:String):void
@@ -166,6 +184,8 @@ package net.natpat
 		
 		public function setOffset(x:int, y:int):void
 		{
+			if (x <= 0) x += width;
+			if (y <= 0) y += height;
 			offset.x = x;
 			offset.y = y;
 		}
@@ -194,8 +214,8 @@ package net.natpat
 			{
 				trace(r.width);
 				trace(r.height);
-				r.x = oldAnim.frames[i].x * width + offset.x;
-				r.y = oldAnim.frames[i].y * height + offset.y;
+				r.x = oldAnim.frames[i].x * width - width + offset.x;
+				r.y = oldAnim.frames[i].y * height - height + offset.y;
 				strip.copyPixels(bitmapData, r, p);
 				p.x += newW;
 				
