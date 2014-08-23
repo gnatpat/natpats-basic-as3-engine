@@ -135,6 +135,13 @@ package net.natpat
 			camera.x += offset.x;
 			camera.y += offset.y;
 		}
+		
+		public static function loadBitmapDataFromSource(source:*):BitmapData
+		{
+			if (source is Class) return Bitmap(new source).bitmapData;
+			if (source is BitmapData) return source;
+			return null;
+		}
 	}
 
 }
