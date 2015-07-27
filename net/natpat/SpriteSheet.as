@@ -28,8 +28,6 @@ package net.natpat
 		protected var point:Point;
 		protected var rect:Rectangle;
 		
-		protected var buffer:BitmapData;
-		
 		protected var bitmapData:BitmapData;
 		
 		public function SpriteSheet(source:*, width:int, height:int)
@@ -47,8 +45,6 @@ package net.natpat
 			
 			frame = 0;
 			time = 0;
-			
-			buffer = GV.screen;
 			
 			bitmapData = GV.loadBitmapDataFromSource(source);
 			
@@ -112,7 +108,7 @@ package net.natpat
 			}
 		}
 		
-		public function render(x:int, y:int):void
+		public function render(buffer:BitmapData, x:int = 0, y:int = 0):void
 		{
 			if (anim == null) return;
 			

@@ -1,5 +1,6 @@
 package net.natpat.gui 
 {
+	import flash.display.BitmapData;
 	import flash.text.engine.ElementFormat;
 	
 	import net.natpat.gui.IGuiElement
@@ -53,11 +54,11 @@ package net.natpat.gui
 			}
 		}
 		
-		public static function render():void
+		public static function render(buffer:BitmapData):void
 		{
 			for (i = 0; i < elements.length; i++)
 			{
-				elements[i].render()
+				elements[i].render(buffer)
 			}
 		}
 		

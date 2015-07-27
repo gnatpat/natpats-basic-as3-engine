@@ -177,12 +177,12 @@ package net.natpat.gui
 			this.y = yCentre? (GC.SCREEN_HEIGHT - bitmapData.height) / 2 : this.y;
 		}
 		
-		public function render():void
+		public function render(buffer:BitmapData):void
 		{
 			if (bitmapData == null) return; 
 			renderLocation.x = x;
 			renderLocation.y = y;
-			GV.screen.copyPixels(bitmapData, clipRectangle, renderLocation, null, null, true);
+			buffer.copyPixels(bitmapData, clipRectangle, renderLocation, null, null, true);
 		}
 		
 		public function update():void

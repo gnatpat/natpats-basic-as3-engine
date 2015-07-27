@@ -12,7 +12,6 @@ package net.natpat
 	public class RotationImage 
 	{
 		
-		private var bmp:Bitmap;
 		private var bd:BitmapData;
 		
 		private var rotated:BitmapData;
@@ -27,10 +26,9 @@ package net.natpat
 		private var rect:Rectangle;
 		private var point:Point;
 		
-		public function RotationImage(source:Class, frames:int = 36, smooth:Boolean = false) 
+		public function RotationImage(source:*, frames:int = 36, smooth:Boolean = false) 
 		{
-			bmp = (new source);
-			bd = bmp.bitmapData;
+			bd = GV.loadBitmapDataFromSource(source);
 			
 			noOfFrames = frames;
 			

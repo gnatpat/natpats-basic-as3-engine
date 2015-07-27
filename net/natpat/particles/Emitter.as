@@ -109,7 +109,7 @@
 		}
 		
 		/** @private Renders the particles. */
-		public function render():void 
+		public function render(screen:BitmapData):void 
 		{
 			// quit if there are no particles
 			if (!particle) return;
@@ -161,15 +161,15 @@
 					var scale:Number = size + sizeRange * sizeT;
 					if (scale != 1)
 					{
-						GV.screen.copyPixels(scaleBitmapData(buffer, scale), sizeBufferRect, pp, null, null, true);
+						screen.copyPixels(scaleBitmapData(buffer, scale), sizeBufferRect, pp, null, null, true);
 					}
 					else
 					{
 						// draw particle
-						GV.screen.copyPixels(buffer, bufferRect, pp, null, null, true);
+						screen.copyPixels(buffer, bufferRect, pp, null, null, true);
 					}
 				}
-				else GV.screen.copyPixels(source, frame, pp, null, null, true);
+				else screen.copyPixels(source, frame, pp, null, null, true);
 				
 				// get next particle
 				p = p.next;

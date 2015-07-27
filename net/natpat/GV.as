@@ -4,7 +4,7 @@ package net.natpat
 	import flash.events.Event;
 	import flash.geom.Point;
 	import flash.display.BitmapData;
-	
+	import flash.display.Bitmap;
 	/**
 	 * ...
 	 * @author Nathan Patel

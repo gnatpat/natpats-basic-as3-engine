@@ -57,9 +57,9 @@ package net.natpat
 			//Render the background
 			renderer.fillRect(new Rectangle(0, 0, renderer.width, renderer.height), 0xffffff);
 			
-			emitter.render();
+			emitter.render(GV.screen);
 			
-			GuiManager.render();
+			GuiManager.render(GV.screen);
 			
 			renderer.unlock();
 		}

@@ -1,5 +1,6 @@
 package net.natpat.gui 
 {
+	import flash.display.BitmapData;
 	
 	/**
 	 * ...
@@ -7,7 +8,7 @@ package net.natpat.gui
 	 */
 	public interface IGuiElement
 	{
-		function render():void;
+		function render(buffer:BitmapData):void;
 		
 		function update():void;
 		
