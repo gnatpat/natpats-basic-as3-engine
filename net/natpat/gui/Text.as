@@ -32,11 +32,6 @@ package net.natpat.gui
 		public static var font:String = "default";
 		
 		/**
-		 * The font GC.SIZE to assign to new Text objects. If using Visitor set to a multiple of 13!
-		 */
-		public static var SIZE:uint = 9;
-		
-		/**
 		 * x location of the text
 		 */
 		public var x:Number;
@@ -50,7 +45,7 @@ package net.natpat.gui
 		 * Colour of the text
 		 */
 		public var colour:uint;
-		
+
 		/**
 		 * The place on the bitmap data to take the Thing's graphic from
 		 */
@@ -66,7 +61,7 @@ package net.natpat.gui
 		 * @param	_getTextString	Function that returns the string to display
 		 * @param	... args		Arguments to pass to the function
 		 */
-		public function Text(x:int, y:int, text:String, scale:int = 1, hasOutline:Boolean = true, colour:uint = 0xffffff)
+		public function Text(x:int, y:int, text:String, size:int = 10, hasOutline:Boolean = true, colour:uint = 0xffffff)
 		{
 			this.x = x;
 			this.y = y;
@@ -82,16 +77,16 @@ package net.natpat.gui
 				yCentre = true;
 			}
 			
-			this.scale = scale;
+			this.scale = 1;
 			
 			this.scroll = scroll;
 			
-			//Gets the font and GC.SIZE from the static variables and puts them into local ones, so the font and GC.SIZE are "saved"
 			_font = font;
-			_SIZE = SIZE;
+
+            _size = size;
 			
 			//Create the text format.
-			_form = new TextFormat(_font, _SIZE, colour)
+			_form = new TextFormat(_font, _size, colour)
 			
 			//Set the TextField to use embedded fonts, so we can use Visitor
 			_field.embedFonts = true;
@@ -104,14 +99,14 @@ package net.natpat.gui
 			_field.text = _text = text;
 			
 			//Add the black outline
-			var outline:GlowFilter = new GlowFilter();
-			outline.blurX = outline.blurY = 1.6;
-			outline.color = 0x000000;
-			outline.quality = 1;
-			outline.strength = 250;
-			
 			if (hasOutline)
 			{
+                var outline:GlowFilter = new GlowFilter();
+                outline.blurX = outline.blurY = 1.6;
+                outline.color = 0x000000;
+                outline.quality = 1;
+                outline.strength = 250;
+			
 				var filterArray:Array = new Array();
 				filterArray.push(outline);
 				_field.filters = filterArray;
@@ -126,7 +121,7 @@ package net.natpat.gui
 			bitmapData = new BitmapData(1, 1);
 			
 			clipRectangle = unscaledBitmapData.rect;
-			//Update the text object
+			//Update the9text object
 			updateGraphic();
 		}
 		
@@ -225,7 +220,7 @@ package net.natpat.gui
 		protected var _form:TextFormat;
 		protected var _text:String;
 		protected var _font:String;
-		protected var _SIZE:uint;
+		protected var _size:uint;
 		protected var scroll:Boolean;
 		protected var scale:int;
 		private   var renderLocation:Point = new Point();
