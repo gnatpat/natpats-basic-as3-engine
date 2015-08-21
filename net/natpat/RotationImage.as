@@ -55,7 +55,7 @@ package net.natpat
 			point = new Point();
 		}
 		
-		public function render(x:int, y:int):void
+		public function render(buffer:BitmapData, x:int = 0, y:int = 0):void
 		{
 			angle %= 360;
 			if (angle < 0) angle += 360;
@@ -65,7 +65,7 @@ package net.natpat
 			point.x = x;
 			point.y = y;
 			
-			GV.screen.copyPixels(rotated, rect, point, null, null, true);
+			buffer.copyPixels(rotated, rect, point, null, null, true);
 		}
 		
 	}
