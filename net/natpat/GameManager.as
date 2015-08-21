@@ -14,6 +14,7 @@ package net.natpat
 	import net.natpat.gui.GuiManager
 	import net.natpat.utils.Ease;
 	import net.natpat.utils.Key;
+    import net.natpat.utils.TweenManager;
 	
 	/**
 	 * ...
@@ -26,8 +27,11 @@ package net.natpat
 		 */
 		public var bitmap:Bitmap;
 		public static var renderer:BitmapData;
+
+        public var tweenManager:TweenManager;
 		
 		public var text:Text = new Text(10, 10, "Hello, World!", 2, true);
+        private var textHeight:Number = 1;
 		public var emitter:Emitter = new Emitter(new BitmapData(4, 4, true, 0xffffffff));
 		
 		public function GameManager(stageWidth:int, stageHeight:int) 
@@ -40,6 +44,7 @@ package net.natpat
 			bitmap = new Bitmap(renderer);
 			
 			GV.screen = renderer;
+            tweenManager = new TweenManager();
 			
 			GuiManager.add(text);
 			
@@ -67,6 +72,7 @@ package net.natpat
 		public function update():void
 		{
 			GuiManager.update();
+            tweenManager.update();
 			
 			emitter.x = Input.mouseX;
 			emitter.y = Input.mouseY;
